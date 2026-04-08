@@ -3,9 +3,31 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Routine – ABDULLAH AL ASIK</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Class Routine - Abdullah Al Asik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --bg: #0b1020;
+        --bg-soft: #121932;
+        --text: #e8eefb;
+        --muted: #9dadcf;
+        --accent: #60a5fa;
+        --border: #24335e;
+        --glass: rgba(18, 25, 50, 0.75);
+        --card-shadow: 0 14px 45px rgba(0, 0, 0, 0.35);
+      }
+
+      [data-theme="light"] {
+        --bg: #eef4ff;
+        --bg-soft: #ffffff;
+        --text: #102144;
+        --muted: #5f7096;
+        --accent: #2563eb;
+        --border: #d5e0ff;
+        --glass: rgba(255, 255, 255, 0.86);
+        --card-shadow: 0 14px 40px rgba(37, 99, 235, 0.12);
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -13,448 +35,1901 @@
       }
 
       body {
-        font-family: 'Poppins', sans-serif;
-        background: #0f172a;
-        color: #e2e8f0;
+        font-family: "Poppins", sans-serif;
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 30px 16px;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 10% 10%, rgba(96, 165, 250, 0.2), transparent 30%),
+          radial-gradient(circle at 85% 15%, rgba(167, 139, 250, 0.2), transparent 32%),
+          var(--bg);
+        padding: 22px 14px 28px;
+        overflow-x: hidden;
       }
 
-      h1 {
-        font-size: 22px;
-        font-weight: 700;
-        color: #38bdf8;
-        margin-bottom: 4px;
+      .bg-blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(70px);
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.34;
       }
 
-      .sub {
-        font-size: 13px;
-        color: #64748b;
-        margin-bottom: 24px;
+      .blob-1 {
+        width: 340px;
+        height: 340px;
+        left: -90px;
+        top: -80px;
+        background: color-mix(in srgb, var(--accent) 74%, #7c3aed 26%);
+        animation: floatBlobOne 12s ease-in-out infinite;
       }
 
-      .wrap {
+      .blob-2 {
+        width: 300px;
+        height: 300px;
+        right: -90px;
+        bottom: -70px;
+        background: color-mix(in srgb, var(--accent) 70%, #06b6d4 30%);
+        animation: floatBlobTwo 14s ease-in-out infinite;
+      }
+
+      @keyframes floatBlobOne {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50% { transform: translate3d(20px, 18px, 0) scale(1.12); }
+      }
+
+      @keyframes floatBlobTwo {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50% { transform: translate3d(-24px, -18px, 0) scale(1.1); }
+      }
+
+      .container {
         width: 100%;
-        max-width: 980px;
-        overflow-x: auto;
+        max-width: 1080px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 8px;
+        right: 8px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          color-mix(in srgb, var(--accent) 75%, #22d3ee 25%) 50%,
+          transparent 100%
+        );
+        opacity: 0.75;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        animation: revealUp 0.55s ease both;
+      }
+
+      .clock-widget {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
+        border-radius: 16px;
+        padding: 10px 14px;
+        box-shadow: var(--card-shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .clock-widget::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          115deg,
+          transparent 32%,
+          color-mix(in srgb, var(--accent) 24%, transparent) 50%,
+          transparent 68%
+        );
+        transform: translateX(-120%);
+        animation: clockSweep 4.8s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes clockSweep {
+        to { transform: translateX(120%); }
+      }
+
+      .clock-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 16px rgba(34, 197, 94, 0.7);
+      }
+
+      .clock-time {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 1px;
+        font-variant-numeric: tabular-nums;
+        text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 40%, transparent);
+      }
+
+      .clock-date {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .clock-meta {
+        margin-top: 2px;
+        font-size: 10px;
+        color: color-mix(in srgb, var(--muted) 82%, #ffffff 18%);
+        letter-spacing: 0.4px;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 10px 12px;
+        box-shadow: var(--card-shadow);
+      }
+
+      .controls input[type="search"] {
+        min-width: 160px;
+      }
+
+      .controls-collapsible {
+        display: none;
+        width: 100%;
+        justify-content: flex-end;
+        margin-bottom: 8px;
+      }
+
+      .controls-toggle {
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .controls label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .theme-badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.35px;
+        color: var(--accent);
+        border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+        background: color-mix(in srgb, var(--accent) 14%, transparent);
+        border-radius: 999px;
+        padding: 4px 8px;
+        line-height: 1;
+        min-width: 74px;
+        text-align: center;
+      }
+
+      .controls select,
+      .controls input {
+        border: 1px solid var(--border);
+        outline: none;
+        background: var(--bg-soft);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 6px 8px;
+        font-family: inherit;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      }
+
+      .controls select:focus,
+      .controls input:focus {
+        border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+      }
+
+      .theme-anim,
+      .theme-anim::before,
+      .theme-anim::after {
+        transition:
+          background-color 0.45s ease,
+          color 0.45s ease,
+          border-color 0.45s ease,
+          box-shadow 0.45s ease,
+          opacity 0.45s ease;
+      }
+
+      .toggle-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--bg-soft) 85%, transparent);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .toggle-group:hover {
+        transform: translateY(-1px);
+        border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+      }
+
+      .toggle-group label {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .toggle-group input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 38px;
+        height: 22px;
+        border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--border) 75%, #ffffff 25%);
+        background: color-mix(in srgb, var(--bg) 72%, var(--bg-soft) 28%);
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .toggle-group input[type="checkbox"]::before {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        transition: transform 0.25s ease, background-color 0.25s ease;
+      }
+
+      .toggle-group input[type="checkbox"]:checked {
+        background: color-mix(in srgb, var(--accent) 62%, #22d3ee 38%);
+        border-color: color-mix(in srgb, var(--accent) 70%, #22d3ee 30%);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+      }
+
+      .toggle-group input[type="checkbox"]:checked::before {
+        transform: translateX(16px);
+        background: #f8fbff;
+      }
+
+      .toggle-group input[type="checkbox"]:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+      }
+
+      .hero {
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 22px 18px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+        animation: revealUp 0.7s ease both;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: -150% -60%;
+        background: linear-gradient(
+          120deg,
+          transparent 35%,
+          color-mix(in srgb, var(--accent) 24%, transparent) 48%,
+          transparent 62%
+        );
+        transform: rotate(10deg);
+        animation: heroSweep 6s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      @keyframes heroSweep {
+        from { transform: translateX(-35%) rotate(10deg); }
+        to { transform: translateX(35%) rotate(10deg); }
+      }
+
+      .hero h1 {
+        font-size: clamp(22px, 3.2vw, 34px);
+        line-height: 1.2;
+        letter-spacing: 0.4px;
+        font-weight: 800;
+        background: linear-gradient(120deg, #ffffff 0%, color-mix(in srgb, var(--accent) 65%, #ffffff 35%) 40%, #ffffff 72%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 4px 22px color-mix(in srgb, var(--accent) 20%, transparent);
+      }
+
+      [data-theme="light"] .hero h1 {
+        background: linear-gradient(120deg, #0f172a 0%, color-mix(in srgb, var(--accent) 70%, #0f172a 30%) 55%, #0f172a 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .hero p {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .insight-grid {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .insight-card {
+        border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+        background: color-mix(in srgb, var(--bg-soft) 82%, transparent);
+        border-radius: 12px;
+        padding: 8px 10px;
+      }
+
+      .insight-label {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.35px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .insight-value {
+        margin-top: 2px;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .day-filter-bar {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .day-chip {
+        border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+        background: color-mix(in srgb, var(--bg-soft) 85%, transparent);
+        color: var(--muted);
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .day-chip:hover {
+        transform: translateY(-1px);
+      }
+
+      .day-chip.active {
+        color: #ffffff;
+        background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 72%, #22d3ee 28%), #a78bfa);
+        border-color: transparent;
+        box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 28%, transparent);
+      }
+
+      .today-pill {
+        display: inline-block;
+        margin-top: 14px;
+        border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+        color: var(--accent);
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+      }
+
+      .today-showcase {
+        margin-top: 10px;
+        border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
         border-radius: 14px;
-        border: 1px solid #1e3a5f;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        background: color-mix(in srgb, var(--bg-soft) 80%, transparent);
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+        animation: todayFloat 4.2s ease-in-out infinite;
+      }
+
+      .today-showcase::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 14px;
+        padding: 1px;
+        background: conic-gradient(
+          from var(--today-angle, 0deg),
+          color-mix(in srgb, var(--accent) 70%, #22d3ee 30%),
+          #a78bfa,
+          #22d3ee,
+          color-mix(in srgb, var(--accent) 70%, #22d3ee 30%)
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.65;
+        pointer-events: none;
+        animation: todayBorderSpin 8s linear infinite;
+      }
+
+      @keyframes todayBorderSpin {
+        from { --today-angle: 0deg; }
+        to { --today-angle: 360deg; }
+      }
+
+      @keyframes todayFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-1.5px); }
+      }
+
+      .today-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .today-orb {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--accent) 78%, #22d3ee 22%);
+        box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 55%, transparent);
+        position: relative;
+      }
+
+      .today-orb::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+        animation: todayOrbPulse 1.8s ease-out infinite;
+      }
+
+      @keyframes todayOrbPulse {
+        0% { transform: scale(0.8); opacity: 0.6; }
+        70% { transform: scale(1.35); opacity: 0; }
+        100% { transform: scale(1.35); opacity: 0; }
+      }
+
+      .today-title {
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.3px;
+      }
+
+      .today-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .today-date {
+        font-size: 11px;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .today-right {
+        min-width: 138px;
+      }
+
+      .today-progress-label {
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        text-align: right;
+      }
+
+      .today-progress-wrap {
+        width: 100%;
+        height: 7px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: color-mix(in srgb, var(--bg) 70%, var(--border) 30%);
+      }
+
+      .today-progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #22d3ee, var(--accent), #a78bfa);
+        background-size: 180% 100%;
+        animation: progressShimmer 2.6s linear infinite;
+        transition: width 0.4s ease;
+      }
+
+      .live-panel {
+        margin-top: 12px;
+        border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+        border-radius: 14px;
+        background: color-mix(in srgb, var(--bg-soft) 78%, transparent);
+        padding: 10px 12px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .live-panel.active {
+        border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+        box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent),
+          0 0 28px color-mix(in srgb, var(--accent) 18%, transparent);
+      }
+
+      .live-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .live-label {
+        font-size: 11px;
+        letter-spacing: 0.45px;
+        color: var(--muted);
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .live-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .live-time {
+        font-size: 11px;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .live-sub {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .progress-wrap {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: color-mix(in srgb, var(--bg) 70%, var(--border) 30%);
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #22d3ee, var(--accent), #a78bfa);
+        background-size: 200% 100%;
+        animation: progressShimmer 2.6s linear infinite;
+        transition: width 0.35s ease;
+      }
+
+      .quick-actions {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .quick-btn {
+        border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+        background: color-mix(in srgb, var(--bg-soft) 80%, var(--accent) 20%);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 7px 10px;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quick-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+      }
+
+      .quick-btn:active {
+        transform: translateY(0);
+      }
+
+      .quick-btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -120%;
+        width: 80%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
+        transform: skewX(-18deg);
+        transition: left 0.45s ease;
+      }
+
+      .quick-btn:hover::after {
+        left: 130%;
+      }
+
+      .shortcut-hint {
+        margin-top: 8px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .version-tag {
+        margin-top: 8px;
+        font-size: 10px;
+        color: color-mix(in srgb, var(--muted) 80%, #ffffff 20%);
+        opacity: 0.85;
+      }
+
+      .compact-mode .hero {
+        padding: 16px 14px;
+      }
+
+      .compact-mode .hero p {
+        margin-top: 4px;
+        font-size: 12px;
+      }
+
+      .compact-mode .today-pill {
+        margin-top: 10px;
+        padding: 5px 10px;
+      }
+
+      .compact-mode .live-panel {
+        margin-top: 10px;
+        padding: 8px 10px;
+      }
+
+      .compact-mode thead th {
+        padding: 10px 8px;
+        font-size: 11px;
+      }
+
+      .compact-mode tbody td {
+        padding: 5px;
+      }
+
+      .compact-mode .class-card {
+        padding: 7px 8px;
+        font-size: 12px;
+      }
+
+      .compact-mode .teacher {
+        margin-top: 2px;
+        font-size: 10px;
+      }
+
+      .row-hidden {
+        display: none;
+      }
+
+      .row-in {
+        opacity: 0;
+        transform: translateY(8px);
+        animation: rowIn 0.5s ease forwards;
+      }
+
+      @keyframes rowIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes progressShimmer {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+      }
+
+      .schedule {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 20px;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        box-shadow: var(--card-shadow);
+        animation: revealUp 0.85s ease both;
+        position: relative;
+      }
+
+      .schedule::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 20px;
+        padding: 1px;
+        background: conic-gradient(
+          from var(--neon-angle, 0deg),
+          color-mix(in srgb, var(--accent) 85%, #22d3ee 15%),
+          #a78bfa,
+          #fb7185,
+          #22d3ee,
+          color-mix(in srgb, var(--accent) 85%, #22d3ee 15%)
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.8;
+        animation: neonRotate 6s linear infinite;
+        pointer-events: none;
+      }
+
+      .schedule::after {
+        content: "";
+        position: absolute;
+        inset: -12px;
+        border-radius: 24px;
+        background: radial-gradient(
+          circle at 20% 20%,
+          color-mix(in srgb, var(--accent) 35%, transparent),
+          transparent 55%
+        );
+        filter: blur(16px);
+        z-index: -1;
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      @keyframes neonRotate {
+        from { --neon-angle: 0deg; }
+        to { --neon-angle: 360deg; }
       }
 
       table {
         width: 100%;
-        border-collapse: collapse;
-        min-width: 620px;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 700px;
+      }
+
+      tbody tr {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+
+      tbody tr:hover {
+        transform: translateX(2px);
+        background: color-mix(in srgb, var(--accent) 5%, transparent);
       }
 
       thead th {
-        background: #1e3a5f;
-        padding: 13px 10px;
+        background: color-mix(in srgb, var(--accent) 14%, var(--bg-soft));
+        color: var(--accent);
         font-size: 12px;
         font-weight: 600;
-        color: #38bdf8;
-        letter-spacing: 0.5px;
-        border-bottom: 2px solid #2a4f7a;
+        letter-spacing: 0.35px;
+        padding: 14px 10px;
         text-align: center;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        backdrop-filter: blur(8px);
       }
 
       thead th:first-child {
         text-align: left;
-        padding-left: 18px;
-        min-width: 120px;
-        color: #94a3b8;
+        padding-left: 16px;
       }
 
-      tbody tr {
-        border-bottom: 1px solid #1e3a5f;
+      tbody td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
       }
 
-      tbody tr:last-child {
+      tbody tr:last-child td {
         border-bottom: none;
       }
 
-      tbody tr:hover {
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      td {
-        padding: 8px;
-        vertical-align: middle;
-        text-align: center;
-      }
-
-      td:first-child {
+      tbody td:first-child {
         text-align: left;
-        padding-left: 18px;
-        font-size: 14px;
         font-weight: 600;
-        color: #cbd5e1;
-        background: #131f35;
-        border-right: 2px solid #1e3a5f;
+        color: var(--text);
+        padding-left: 16px;
+        background: color-mix(in srgb, var(--bg-soft) 85%, var(--accent) 15%);
         white-space: nowrap;
       }
 
-      .today-row td:first-child {
-        color: #38bdf8;
-        background: rgba(56, 189, 248, 0.07);
-      }
-
       .today-row {
-        background: rgba(56, 189, 248, 0.03);
+        background: color-mix(in srgb, var(--accent) 14%, transparent);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
       }
 
-      .card {
-        border-radius: 10px;
+      .today-row td:first-child {
+        color: var(--accent);
+        font-weight: 700;
+        position: relative;
+      }
+
+      .today-row td:first-child::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 4px;
+        bottom: 4px;
+        width: 4px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #22d3ee, var(--accent), #a78bfa);
+      }
+
+      .today-label {
+        margin-left: 8px;
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb, #22d3ee);
+        border-radius: 999px;
+        padding: 2px 7px;
+        vertical-align: middle;
+      }
+
+      .class-card {
+        border-radius: 12px;
         padding: 10px 10px;
         font-size: 13px;
-        font-weight: 500;
-        line-height: 1.4;
-        transition: transform 0.15s;
+        font-weight: 600;
+        line-height: 1.35;
+        border-left: 4px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        position: relative;
+        overflow: hidden;
       }
 
-      .card:hover {
-        transform: translateY(-2px);
+      .class-card:hover {
+        transform: translateY(-3px) scale(1.015);
+        filter: saturate(1.12);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.24);
       }
 
-      .card .teacher {
+      .class-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.16) 48%,
+          transparent 100%
+        );
+        transform: translateX(-120%);
+        transition: transform 0.45s ease;
+        pointer-events: none;
+      }
+
+      .class-card:hover::after {
+        transform: translateX(120%);
+      }
+
+      .teacher {
+        display: block;
+        margin-top: 4px;
         font-size: 11px;
-        font-weight: 400;
-        margin-top: 3px;
-        opacity: 0.75;
+        font-weight: 500;
+        opacity: 0.85;
       }
 
-      .doe {
-        background: rgba(167, 139, 250, 0.15);
-        color: #c4b5fd;
-        border-left: 3px solid #a78bfa;
-      }
+      .doe { background: rgba(167, 139, 250, 0.16); color: #ddd6fe; border-left-color: #a78bfa; }
+      .sd { background: rgba(56, 189, 248, 0.16); color: #bae6fd; border-left-color: #38bdf8; }
+      .spss { background: rgba(250, 204, 21, 0.16); color: #fde68a; border-left-color: #facc15; }
+      .reg { background: rgba(251, 113, 133, 0.16); color: #fecdd3; border-left-color: #fb7185; }
+      .si { background: rgba(52, 211, 153, 0.16); color: #bbf7d0; border-left-color: #34d399; }
+      .as { background: rgba(251, 191, 36, 0.16); color: #fde68a; border-left-color: #fbbf24; }
 
-      .sd {
-        background: rgba(56, 189, 248, 0.15);
-        color: #7dd3fc;
-        border-left: 3px solid #38bdf8;
-      }
-
-      .spss {
-        background: rgba(250, 204, 21, 0.15);
-        color: #fde68a;
-        border-left: 3px solid #facc15;
-      }
-
-      .reg {
-        background: rgba(251, 113, 133, 0.15);
-        color: #fda4af;
-        border-left: 3px solid #fb7185;
-      }
-
-      .si {
-        background: rgba(52, 211, 153, 0.15);
-        color: #6ee7b7;
-        border-left: 3px solid #34d399;
-      }
-
-      .as {
-        background: rgba(251, 191, 36, 0.15);
-        color: #fcd34d;
-        border-left: 3px solid #fbbf24;
-      }
+      [data-theme="light"] .doe { color: #5b21b6; }
+      [data-theme="light"] .sd { color: #0c4a6e; }
+      [data-theme="light"] .spss { color: #92400e; }
+      [data-theme="light"] .reg { color: #9f1239; }
+      [data-theme="light"] .si { color: #14532d; }
+      [data-theme="light"] .as { color: #92400e; }
 
       .empty {
-        background: transparent;
+        opacity: 0.35;
+      }
+
+      .current-class {
+        position: relative;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 65%, transparent),
+          0 0 24px color-mix(in srgb, var(--accent) 55%, transparent);
+        animation: currentPulse 1.9s ease-in-out infinite;
+      }
+
+      .current-class::after {
+        content: "LIVE NOW";
+        position: absolute;
+        top: -8px;
+        right: 8px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #fff;
+        background: linear-gradient(135deg, #ef4444, #fb7185);
+        padding: 2px 6px;
+        border-radius: 999px;
+        animation: liveBadgeBlink 1.4s ease-in-out infinite;
+      }
+
+      @keyframes liveBadgeBlink {
+        0%, 100% { opacity: 1; transform: translateY(0); }
+        50% { opacity: 0.72; transform: translateY(-1px); }
+      }
+
+      @keyframes currentPulse {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-1px); }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: revealUp 0.7s ease forwards;
+      }
+
+      @keyframes revealUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       footer {
-        margin-top: 20px;
-        font-size: 11px;
-        color: #334155;
+        margin-top: 14px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        animation: revealUp 1s ease both;
       }
 
-      /* ── Clock Widget ── */
-      #clock-widget {
-        background: rgba(15, 23, 42, 0.85);
-        border: 1px solid #1e3a5f;
-        border-radius: 16px;
-        padding: 10px 18px 10px 14px;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,189,248,0.08);
-        margin-bottom: 14px;
-        animation: clockSlideIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
-      }
-
-      @keyframes clockSlideIn {
-        from { opacity: 0; transform: translateY(-12px) scale(0.92); }
-        to   { opacity: 1; transform: translateY(0)    scale(1);    }
-      }
-
-      #clock-icon {
-        width: 32px;
-        height: 32px;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      #clock-icon svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      #clock-text {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        line-height: 1;
-      }
-
-      #clock-time {
-        font-size: 20px;
-        font-weight: 700;
-        color: #38bdf8;
-        letter-spacing: 1px;
-        font-variant-numeric: tabular-nums;
-        animation: timePulse 1s ease-in-out infinite alternate;
-      }
-
-      @keyframes timePulse {
-        from { text-shadow: 0 0 6px rgba(56,189,248,0.3); }
-        to   { text-shadow: 0 0 14px rgba(56,189,248,0.7); }
-      }
-
-      #clock-colon {
+      .notif-dot {
         display: inline-block;
-        animation: blink 1s step-start infinite;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        margin-right: 6px;
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.75);
+        vertical-align: middle;
       }
 
-      @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
+      .particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 9999;
       }
 
-      #clock-ampm {
-        font-size: 11px;
-        font-weight: 600;
-        color: #7dd3fc;
-        margin-left: 2px;
-        vertical-align: super;
-        letter-spacing: 0.5px;
+      .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--accent) 70%, #ffffff 30%);
+        box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 55%, #ffffff 45%);
+        animation: particleFade 700ms ease-out forwards;
       }
 
-      #clock-date {
-        font-size: 10px;
-        color: #475569;
-        margin-top: 3px;
-        letter-spacing: 0.3px;
+      .fx-disabled .particle {
+        display: none;
       }
 
-      /* Analog clock face */
-      .clock-face { fill: rgba(30,58,95,0.7); }
-      .clock-rim  { fill: none; stroke: #2a4f7a; stroke-width: 1.5; }
-      .hand-hour  { stroke: #7dd3fc; stroke-width: 2; stroke-linecap: round; }
-      .hand-min   { stroke: #38bdf8; stroke-width: 1.5; stroke-linecap: round; }
-      .hand-sec   { stroke: #fb7185; stroke-width: 1; stroke-linecap: round; }
-      .clock-dot  { fill: #38bdf8; }
+      @keyframes particleFade {
+        from {
+          opacity: 0.95;
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translate3d(var(--dx), var(--dy), 0) scale(0.2);
+        }
+      }
 
-      @media (max-width: 500px) {
-        #clock-widget { top: 10px; right: 10px; padding: 8px 12px 8px 10px; }
-        #clock-time   { font-size: 16px; }
-        #clock-icon   { width: 26px; height: 26px; }
+      @media (max-width: 700px) {
+        .bg-blob {
+          opacity: 0.24;
+        }
+
+        .clock-time {
+          font-size: 18px;
+        }
+
+        .hero {
+          padding: 18px 14px;
+        }
+
+        .live-top {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .insight-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .today-showcase {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .today-right {
+          width: 100%;
+          min-width: 0;
+        }
+
+        .today-progress-label {
+          text-align: left;
+        }
+
+        .controls-collapsible {
+          display: flex;
+        }
+
+        .controls {
+          display: none;
+        }
+
+        .controls.open {
+          display: flex;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      .cursor-spotlight {
+        position: fixed;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+          color-mix(in srgb, var(--accent) 8%, transparent) 45%,
+          transparent 70%
+        );
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s linear;
+        opacity: 0.9;
+      }
+
+      @media print {
+        body {
+          background: #ffffff !important;
+          color: #111827 !important;
+          padding: 0;
+        }
+
+        .bg-blob,
+        .particles,
+        .toolbar,
+        .quick-actions,
+        footer {
+          display: none !important;
+        }
+
+        .container,
+        .hero,
+        .schedule {
+          box-shadow: none !important;
+          border: 1px solid #cbd5e1 !important;
+          background: #ffffff !important;
+        }
+
+        .hero {
+          margin-bottom: 8px;
+        }
+
+        .schedule::before,
+        .schedule::after {
+          display: none !important;
+        }
       }
     </style>
   </head>
   <body>
-
-    <!-- clock moved below, placeholder removed -->
-      <div id="clock-icon">
-        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="18" class="clock-face"/>
-          <circle cx="20" cy="20" r="18" class="clock-rim"/>
-          <!-- tick marks -->
-          <line x1="20" y1="4"  x2="20" y2="7"  stroke="#2a4f7a" stroke-width="1.5"/>
-          <line x1="20" y1="33" x2="20" y2="36" stroke="#2a4f7a" stroke-width="1.5"/>
-          <line x1="4"  y1="20" x2="7"  y2="20" stroke="#2a4f7a" stroke-width="1.5"/>
-          <line x1="33" y1="20" x2="36" y2="20" stroke="#2a4f7a" stroke-width="1.5"/>
-          <!-- hands -->
-          <line id="hand-h" x1="20" y1="20" x2="20" y2="10" class="hand-hour"/>
-          <line id="hand-m" x1="20" y1="20" x2="20" y2="6"  class="hand-min"/>
-          <line id="hand-s" x1="20" y1="20" x2="20" y2="5"  class="hand-sec"/>
-          <circle cx="20" cy="20" r="2" class="clock-dot"/>
-        </svg>
-      </div>
-      <div id="clock-text">
-        <div id="clock-time">
-          <span id="ct-h">--</span><span id="clock-colon">:</span><span id="ct-m">--</span><span id="clock-colon2">:</span><span id="ct-s">--</span>
-          <span id="clock-ampm"></span>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div id="cursor-spotlight" class="cursor-spotlight"></div>
+    <div id="particles-layer" class="particles"></div>
+    <div class="container theme-anim">
+      <div class="toolbar">
+        <div class="controls-collapsible">
+          <button id="controls-toggle" class="controls-toggle" type="button">Show Controls</button>
         </div>
-        <div id="clock-date">Loading…</div>
+        <div class="clock-widget theme-anim">
+          <span class="clock-dot"></span>
+          <div>
+            <div id="clock-time" class="clock-time">--:--:--</div>
+            <div id="clock-date" class="clock-date">Loading date...</div>
+            <div id="clock-meta" class="clock-meta">Local Time</div>
+          </div>
+        </div>
+
+        <div class="controls theme-anim">
+          <label for="theme-switch">Theme</label>
+          <select id="theme-switch">
+            <option value="auto">Auto (Local)</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+          <span id="theme-badge" class="theme-badge">Auto: --</span>
+          <label for="accent-picker">Accent</label>
+          <input id="accent-picker" type="color" value="#60a5fa">
+          <label for="fx-preset">FX</label>
+          <select id="fx-preset">
+            <option value="minimal">Minimal</option>
+            <option value="balanced">Balanced</option>
+            <option value="cinematic">Cinematic</option>
+          </select>
+          <label for="class-search">Search</label>
+          <input id="class-search" type="search" placeholder="Find class/teacher">
+          <span class="toggle-group theme-anim">
+            <label for="particles-toggle">Particles</label>
+            <input id="particles-toggle" type="checkbox" checked>
+          </span>
+          <span class="toggle-group theme-anim">
+            <label for="sound-toggle">Sound</label>
+            <input id="sound-toggle" type="checkbox" checked>
+          </span>
+          <span class="toggle-group theme-anim">
+            <label for="notification-toggle">Notify</label>
+            <input id="notification-toggle" type="checkbox" checked>
+          </span>
+          <span class="toggle-group theme-anim">
+            <label for="compact-toggle">Compact</label>
+            <input id="compact-toggle" type="checkbox">
+          </span>
+        </div>
       </div>
+
+      <section class="hero theme-anim">
+        <h1>Abdullah Al Asik</h1>
+        <p>Honours 3rd Year - Statistics - Rajshahi College</p>
+        <div class="insight-grid">
+          <div class="insight-card theme-anim">
+            <div class="insight-label">Weekly Classes</div>
+            <div class="insight-value" id="insight-weekly">0</div>
+          </div>
+          <div class="insight-card theme-anim">
+            <div class="insight-label">Today Classes</div>
+            <div class="insight-value" id="insight-today">0</div>
+          </div>
+          <div class="insight-card theme-anim">
+            <div class="insight-label">Completed Today</div>
+            <div class="insight-value" id="insight-completed">0</div>
+          </div>
+        </div>
+        <span class="today-pill" id="today-pill">Today: --</span>
+        <div class="today-showcase theme-anim">
+          <div class="today-left">
+            <span class="today-orb"></span>
+            <div>
+              <div class="today-title">Today Schedule</div>
+              <div class="today-name" id="today-name">--</div>
+            </div>
+          </div>
+          <div class="today-right">
+            <div class="today-date" id="today-date">--</div>
+            <div class="today-progress-label" id="today-progress-label">Completed: 0/0</div>
+            <div class="today-progress-wrap">
+              <div class="today-progress-bar" id="today-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="day-filter-bar" id="day-filter-bar">
+          <button class="day-chip active" data-day="all" type="button">All</button>
+          <button class="day-chip" data-day="0" type="button">Sunday</button>
+          <button class="day-chip" data-day="1" type="button">Monday</button>
+          <button class="day-chip" data-day="2" type="button">Tuesday</button>
+          <button class="day-chip" data-day="3" type="button">Wednesday</button>
+          <button class="day-chip" data-day="4" type="button">Thursday</button>
+        </div>
+        <div class="live-panel theme-anim">
+          <div class="live-top">
+            <div>
+              <div class="live-label">Current Session</div>
+              <div class="live-title" id="live-title">No active class right now</div>
+              <div class="live-sub" id="live-sub">Next class info will appear here</div>
+            </div>
+            <div class="live-time" id="live-time">--:-- - --:--</div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar" id="class-progress"></div>
+          </div>
+          <div class="quick-actions">
+            <button id="btn-focus-now" class="quick-btn" type="button">Focus Current Class</button>
+            <button id="btn-print" class="quick-btn" type="button">Print Routine</button>
+            <button id="btn-reset-filters" class="quick-btn" type="button">Reset Filters</button>
+            <button id="btn-reset-style" class="quick-btn" type="button">Reset Style</button>
+          </div>
+          <div class="shortcut-hint">Shortcuts: P = Print, F = Focus current class, C = Compact mode</div>
+          <div class="version-tag">Routine UI - Premium Motion Edition</div>
+        </div>
+      </section>
+
+      <div class="schedule reveal theme-anim">
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>9:20 - 10:10</th>
+              <th>10:10 - 11:00</th>
+              <th>11:00 - 11:50</th>
+              <th>11:50 - 12:40</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="r0">
+              <td>Sunday</td>
+              <td class="empty">-</td>
+              <td><div class="class-card doe">Design of Experiments <span class="teacher">Usha Ma'am</span></div></td>
+              <td><div class="class-card sd">Sampling Distribution <span class="teacher">Baki Sir</span></div></td>
+              <td><div class="class-card spss">SPSS <span class="teacher">Manik Sir</span></div></td>
+            </tr>
+            <tr id="r1">
+              <td>Monday</td>
+              <td><div class="class-card reg">Regression Analysis <span class="teacher">Nurnnobe Sir</span></div></td>
+              <td><div class="class-card si">Statistical Inference <span class="teacher">Nazmul Sir</span></div></td>
+              <td class="empty">-</td>
+              <td class="empty">-</td>
+            </tr>
+            <tr id="r2">
+              <td>Tuesday</td>
+              <td><div class="class-card reg">Regression Analysis <span class="teacher">Nurnnobe Sir</span></div></td>
+              <td><div class="class-card as">Applied Statistics <span class="teacher">Jubaida Ma'am</span></div></td>
+              <td class="empty">-</td>
+              <td class="empty">-</td>
+            </tr>
+            <tr id="r3">
+              <td>Wednesday</td>
+              <td class="empty">-</td>
+              <td class="empty">-</td>
+              <td><div class="class-card as">Applied Statistics <span class="teacher">Jubaida Ma'am</span></div></td>
+              <td><div class="class-card doe">Design of Experiments <span class="teacher">Usha Ma'am</span></div></td>
+            </tr>
+            <tr id="r4">
+              <td>Thursday</td>
+              <td class="empty">-</td>
+              <td><div class="class-card si">Statistical Inference <span class="teacher">Nazmul Sir</span></div></td>
+              <td><div class="class-card sd">Sampling Distribution <span class="teacher">Baki Sir</span></div></td>
+              <td><div class="class-card spss">SPSS <span class="teacher">Manik Sir</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer>
+        <span class="notif-dot"></span>Friday and Saturday - Rest and recharge
+      </footer>
     </div>
 
-    <h1>ABDULLAH AL ASIK</h1>
-    <p class="sub">Honours 3rd Year · Statistics · Rajshahi College</p>
-    <div class="wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>9:20 – 10:10</th>
-            <th>10:10 – 11:00</th>
-            <th>11:00 – 11:50</th>
-            <th>11:50 – 12:40</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="r0">
-            <td>Sunday</td>
-            <td class="empty"></td>
-            <td>
-              <div class="card doe">Design of Experiments <div class="teacher">Usha Ma'am</div>
-              </div>
-            </td>
-            <td>
-              <div class="card sd">Sampling Distribution <div class="teacher">Baki Sir</div>
-              </div>
-            </td>
-            <td>
-              <div class="card spss">SPSS <div class="teacher">Manik Sir</div>
-              </div>
-            </td>
-          </tr>
-          <tr id="r1">
-            <td>Monday</td>
-            <td>
-              <div class="card reg">Regression Analysis <div class="teacher">Nurnnobe Sir</div>
-              </div>
-            </td>
-            <td>
-              <div class="card si">Statistical Inference <div class="teacher">Nazmul Sir</div>
-              </div>
-            </td>
-            <td class="empty"></td>
-            <td class="empty"></td>
-          </tr>
-          <tr id="r2">
-            <td>Tuesday</td>
-            <td>
-              <div class="card reg">Regression Analysis <div class="teacher">Nurnnobe Sir</div>
-              </div>
-            </td>
-            <td>
-              <div class="card as">Applied Statistics <div class="teacher">Jubaida Ma'am</div>
-              </div>
-            </td>
-            <td class="empty"></td>
-            <td class="empty"></td>
-          </tr>
-          <tr id="r3">
-            <td>Wednesday</td>
-            <td class="empty"></td>
-            <td class="empty"></td>
-            <td>
-              <div class="card as">Applied Statistics <div class="teacher">Jubaida Ma'am</div>
-              </div>
-            </td>
-            <td>
-              <div class="card doe">Design of Experiments <div class="teacher">Usha Ma'am</div>
-              </div>
-            </td>
-          </tr>
-          <tr id="r4">
-            <td>Thursday</td>
-            <td class="empty"></td>
-            <td>
-              <div class="card si">Statistical Inference <div class="teacher">Nazmul Sir</div>
-              </div>
-            </td>
-            <td>
-              <div class="card sd">Sampling Distribution <div class="teacher">Baki Sir</div>
-              </div>
-            </td>
-            <td>
-              <div class="card spss">SPSS <div class="teacher">Manik Sir</div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <footer>Friday & Saturday — Ghum😴</footer>
- 
     <script>
-      const map = {
-        0: 'r0',
-        1: 'r1',
-        2: 'r2',
-        3: 'r3',
-        4: 'r4'
-      };
-      const d = new Date().getDay();
-      if (map[d]) document.getElementById(map[d]).classList.add('today-row');
-    </script>
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const rowMap = { 0: "r0", 1: "r1", 2: "r2", 3: "r3", 4: "r4" };
+      const periods = [
+        { id: "p1", start: "09:20", end: "10:10", col: 1 },
+        { id: "p2", start: "10:10", end: "11:00", col: 2 },
+        { id: "p3", start: "11:00", end: "11:50", col: 3 },
+        { id: "p4", start: "11:50", end: "12:40", col: 4 }
+      ];
+      let lastAlertKey = "";
+      let audioEnabled = localStorage.getItem("routine-audio") !== "off";
+      let particlesEnabled = localStorage.getItem("routine-particles") !== "off";
+      let notifyEnabled = localStorage.getItem("routine-notify") !== "off";
+      const particlesLayer = document.getElementById("particles-layer");
+      const particlesToggle = document.getElementById("particles-toggle");
+      const soundToggle = document.getElementById("sound-toggle");
+      const notificationToggle = document.getElementById("notification-toggle");
+      const compactToggle = document.getElementById("compact-toggle");
+      const controlsToggleBtn = document.getElementById("controls-toggle");
+      const controlsPanel = document.querySelector(".controls");
+      const fxPreset = document.getElementById("fx-preset");
+      const classSearchInput = document.getElementById("class-search");
+      const dayFilterBar = document.getElementById("day-filter-bar");
+      let particleListenerBound = false;
+      const liveTitleEl = document.getElementById("live-title");
+      const liveTimeEl = document.getElementById("live-time");
+      const liveSubEl = document.getElementById("live-sub");
+      const classProgressEl = document.getElementById("class-progress");
+      const livePanelEl = document.querySelector(".live-panel");
+      const todayNameEl = document.getElementById("today-name");
+      const todayDateEl = document.getElementById("today-date");
+      const todayProgressLabelEl = document.getElementById("today-progress-label");
+      const todayProgressBarEl = document.getElementById("today-progress-bar");
+      const btnFocusNow = document.getElementById("btn-focus-now");
+      const btnPrint = document.getElementById("btn-print");
+      const btnResetFilters = document.getElementById("btn-reset-filters");
+      const btnResetStyle = document.getElementById("btn-reset-style");
+      const spotlight = document.getElementById("cursor-spotlight");
+      const insightWeeklyEl = document.getElementById("insight-weekly");
+      const insightTodayEl = document.getElementById("insight-today");
+      const insightCompletedEl = document.getElementById("insight-completed");
+      let selectedDayFilter = "all";
+      let searchQuery = "";
 
-    <!-- Clock Script -->
-    <script>
-      const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-      const elH    = document.getElementById('ct-h');
-      const elM    = document.getElementById('ct-m');
-      const elS    = document.getElementById('ct-s');
-      const elAmpm = document.getElementById('clock-ampm');
-      const elDate = document.getElementById('clock-date');
-      const elC2   = document.getElementById('clock-colon2');
-
-      const handH  = document.getElementById('hand-h');
-      const handM  = document.getElementById('hand-m');
-      const handS  = document.getElementById('hand-s');
-
-      function pad(n){ return String(n).padStart(2,'0'); }
-
-      function rotLine(el, cx, cy, angle, len){
-        const rad = (angle - 90) * Math.PI / 180;
-        el.setAttribute('x2', cx + len * Math.cos(rad));
-        el.setAttribute('y2', cy + len * Math.sin(rad));
+      function toMinutes(timeString) {
+        const [h, m] = timeString.split(":").map(Number);
+        return h * 60 + m;
       }
 
-      function tick(){
-        const now  = new Date();
-        let h = now.getHours();
-        const m    = now.getMinutes();
-        const s    = now.getSeconds();
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        h = h % 12 || 12;
-
-        elH.textContent    = pad(h);
-        elM.textContent    = pad(m);
-        elS.textContent    = pad(s);
-        elAmpm.textContent = ampm;
-
-        const dayName = days[now.getDay()];
-        const dateStr = `${dayName}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-        elDate.textContent = dateStr;
-
-        const hDeg = (h % 12) * 30 + m * 0.5;
-        const mDeg = m * 6 + s * 0.1;
-        const sDeg = s * 6;
-
-        rotLine(handH, 20, 20, hDeg, 9);
-        rotLine(handM, 20, 20, mDeg, 12);
-        rotLine(handS, 20, 20, sDeg, 13);
+      function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, "0");
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        document.getElementById("clock-time").textContent = h + ":" + m + ":" + s;
+        document.getElementById("clock-date").textContent =
+          days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Local Zone";
+        document.getElementById("clock-meta").textContent = "Local Time - " + tz;
       }
 
-      tick();
-      setInterval(tick, 1000);
+      function highlightToday() {
+        const now = new Date();
+        const today = now.getDay();
+        document.getElementById("today-pill").textContent = "Today: " + days[today];
+        todayNameEl.textContent = days[today];
+        todayDateEl.textContent = now.toLocaleDateString(undefined, {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        });
+        document.querySelectorAll(".today-row").forEach((row) => row.classList.remove("today-row"));
+        document.querySelectorAll(".today-label").forEach((el) => el.remove());
+        const rowId = rowMap[today];
+        if (rowId) {
+          const row = document.getElementById(rowId);
+          if (row) {
+            row.classList.add("today-row");
+            const dayCell = row.cells[0];
+            if (dayCell) {
+              const badge = document.createElement("span");
+              badge.className = "today-label";
+              badge.textContent = "Today";
+              dayCell.appendChild(badge);
+            }
+          }
+        }
+      }
 
-      /* blink second colon */
-      setInterval(()=>{
-        elC2.style.opacity = elC2.style.opacity === '0' ? '1' : '0';
-      }, 1000);
+      function highlightCurrentClass() {
+        document.querySelectorAll(".current-class").forEach((el) => el.classList.remove("current-class"));
+        const now = new Date();
+        const day = now.getDay();
+        const rowId = rowMap[day];
+        if (!rowId) return;
+
+        const minuteNow = now.getHours() * 60 + now.getMinutes();
+        const activePeriod = periods.find((p) => minuteNow >= toMinutes(p.start) && minuteNow < toMinutes(p.end));
+        if (!activePeriod) return;
+
+        const row = document.getElementById(rowId);
+        if (!row) return;
+
+        const cell = row.cells[activePeriod.col];
+        if (!cell) return;
+
+        const card = cell.querySelector(".class-card");
+        if (card) card.classList.add("current-class");
+      }
+
+      function getCurrentPeriod(now) {
+        const minuteNow = now.getHours() * 60 + now.getMinutes();
+        return periods.find((p) => minuteNow >= toMinutes(p.start) && minuteNow < toMinutes(p.end));
+      }
+
+      function updateLivePanel() {
+        const now = new Date();
+        const day = now.getDay();
+        const rowId = rowMap[day];
+        if (!rowId) {
+          liveTitleEl.textContent = "No active class right now";
+          liveTimeEl.textContent = "--:-- - --:--";
+          liveSubEl.textContent = "No classes today";
+          classProgressEl.style.width = "0%";
+          livePanelEl.classList.remove("active");
+          return;
+        }
+
+        const period = getCurrentPeriod(now);
+        if (!period) {
+          liveTitleEl.textContent = "No active class right now";
+          liveTimeEl.textContent = "--:-- - --:--";
+          const nowMin = now.getHours() * 60 + now.getMinutes();
+          const upcoming = periods.find((p) => nowMin < toMinutes(p.start));
+          if (upcoming) {
+            const minsLeft = Math.max(0, Math.ceil(toMinutes(upcoming.start) - nowMin));
+            liveSubEl.textContent = "Next class starts in " + minsLeft + " min (" + upcoming.start + ")";
+          } else {
+            liveSubEl.textContent = "All classes finished for today";
+          }
+          classProgressEl.style.width = "0%";
+          livePanelEl.classList.remove("active");
+          return;
+        }
+
+        const row = document.getElementById(rowId);
+        const cell = row ? row.cells[period.col] : null;
+        const card = cell ? cell.querySelector(".class-card") : null;
+        const classTitle = card ? (card.childNodes[0]?.textContent?.trim() || "Class in progress") : "Class in progress";
+
+        liveTitleEl.textContent = classTitle;
+        liveTimeEl.textContent = period.start + " - " + period.end;
+
+        const start = toMinutes(period.start);
+        const end = toMinutes(period.end);
+        const currentMinute = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+        const raw = ((currentMinute - start) / (end - start)) * 100;
+        const safe = Math.max(0, Math.min(100, raw));
+        classProgressEl.style.width = safe.toFixed(1) + "%";
+        liveSubEl.textContent = "Class progress: " + safe.toFixed(0) + "%";
+        livePanelEl.classList.add("active");
+      }
+
+      function getRowClassCount(rowId) {
+        const row = document.getElementById(rowId);
+        if (!row) return 0;
+        return row.querySelectorAll(".class-card").length;
+      }
+
+      function updateInsights() {
+        const weekly = Object.values(rowMap).reduce((sum, rid) => sum + getRowClassCount(rid), 0);
+        const now = new Date();
+        const today = now.getDay();
+        const todayRowId = rowMap[today];
+        const todayCount = todayRowId ? getRowClassCount(todayRowId) : 0;
+
+        let completed = 0;
+        if (todayRowId) {
+          const nowMinutes = now.getHours() * 60 + now.getMinutes();
+          completed = periods.filter((p) => nowMinutes >= toMinutes(p.end)).length;
+          completed = Math.min(completed, todayCount);
+        }
+
+        insightWeeklyEl.textContent = String(weekly);
+        insightTodayEl.textContent = String(todayCount);
+        insightCompletedEl.textContent = String(completed);
+
+        const pct = todayCount > 0 ? (completed / todayCount) * 100 : 0;
+        todayProgressLabelEl.textContent = "Completed: " + completed + "/" + todayCount;
+        todayProgressBarEl.style.width = pct.toFixed(1) + "%";
+      }
+
+      function setupQuickActions() {
+        btnFocusNow.addEventListener("click", () => {
+          const active = document.querySelector(".current-class");
+          if (!active) return;
+          active.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+          active.animate(
+            [
+              { transform: "scale(1)", filter: "saturate(1)" },
+              { transform: "scale(1.02)", filter: "saturate(1.2)" },
+              { transform: "scale(1)", filter: "saturate(1)" }
+            ],
+            { duration: 520, easing: "ease-out" }
+          );
+        });
+
+        btnPrint.addEventListener("click", () => {
+          window.print();
+        });
+
+        btnResetFilters.addEventListener("click", () => {
+          selectedDayFilter = "all";
+          searchQuery = "";
+          classSearchInput.value = "";
+          dayFilterBar.querySelectorAll(".day-chip").forEach((chip) => {
+            chip.classList.toggle("active", chip.dataset.day === "all");
+          });
+          applyFilters();
+        });
+
+        btnResetStyle.addEventListener("click", () => {
+          localStorage.removeItem("routine-theme");
+          localStorage.removeItem("routine-accent");
+          localStorage.removeItem("routine-fx-preset");
+          localStorage.removeItem("routine-particles");
+          localStorage.removeItem("routine-audio");
+          localStorage.removeItem("routine-notify");
+          location.reload();
+        });
+      }
+
+      function applyFilters() {
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach((row) => {
+          const dayAllowed = selectedDayFilter === "all" || row.id === ("r" + selectedDayFilter);
+          const text = row.textContent.toLowerCase();
+          const searchAllowed = !searchQuery || text.includes(searchQuery);
+          row.classList.toggle("row-hidden", !(dayAllowed && searchAllowed));
+        });
+      }
+
+      function setupFilters() {
+        if (dayFilterBar) {
+          dayFilterBar.addEventListener("click", (e) => {
+            const btn = e.target.closest(".day-chip");
+            if (!btn) return;
+            selectedDayFilter = btn.dataset.day;
+            dayFilterBar.querySelectorAll(".day-chip").forEach((chip) => {
+              chip.classList.toggle("active", chip === btn);
+            });
+            applyFilters();
+          });
+        }
+
+        if (classSearchInput) {
+          classSearchInput.addEventListener("input", function () {
+            searchQuery = this.value.trim().toLowerCase();
+            applyFilters();
+          });
+        }
+      }
+
+      function setupRowEntrance() {
+        document.querySelectorAll("tbody tr").forEach((row, idx) => {
+          row.classList.add("row-in");
+          row.style.animationDelay = (120 + idx * 85) + "ms";
+        });
+      }
+
+      function setupCompactMode() {
+        const enabled = localStorage.getItem("routine-compact") === "on";
+        compactToggle.checked = enabled;
+        document.body.classList.toggle("compact-mode", enabled);
+
+        compactToggle.addEventListener("change", function () {
+          document.body.classList.toggle("compact-mode", this.checked);
+          localStorage.setItem("routine-compact", this.checked ? "on" : "off");
+        });
+      }
+
+      function setupCollapsibleControls() {
+        if (!controlsToggleBtn || !controlsPanel) return;
+        controlsToggleBtn.addEventListener("click", () => {
+          const isOpen = controlsPanel.classList.toggle("open");
+          controlsToggleBtn.textContent = isOpen ? "Hide Controls" : "Show Controls";
+        });
+      }
+
+      function setupKeyboardShortcuts() {
+        window.addEventListener("keydown", (e) => {
+          if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+          if (e.key.toLowerCase() === "p") {
+            e.preventDefault();
+            window.print();
+          } else if (e.key.toLowerCase() === "f") {
+            e.preventDefault();
+            btnFocusNow.click();
+          } else if (e.key.toLowerCase() === "c") {
+            e.preventDefault();
+            compactToggle.checked = !compactToggle.checked;
+            compactToggle.dispatchEvent(new Event("change"));
+          }
+        });
+      }
+
+      function beepSoft() {
+        if (!audioEnabled) return;
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          const ctx = new AudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.value = 880;
+          gain.gain.value = 0.0001;
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          const t = ctx.currentTime;
+          gain.gain.exponentialRampToValueAtTime(0.035, t + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+          osc.start(t);
+          osc.stop(t + 0.4);
+          osc.onended = () => ctx.close();
+        } catch (err) {
+          // ignored: some browsers may block autoplay audio
+        }
+      }
+
+      function showClassNotification(title, body) {
+        if (!notifyEnabled) return;
+        if (!("Notification" in window)) return;
+        if (Notification.permission === "granted") {
+          new Notification(title, { body: body, icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%232563eb'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-size='28' fill='white'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E" });
+        } else if (Notification.permission === "default") {
+          Notification.requestPermission();
+        }
+      }
+
+      function announceNewClass() {
+        const now = new Date();
+        const day = now.getDay();
+        const rowId = rowMap[day];
+        if (!rowId) return;
+
+        const period = getCurrentPeriod(now);
+        if (!period) return;
+
+        const key = day + "-" + period.id + "-" + now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate();
+        if (key === lastAlertKey) return;
+
+        const row = document.getElementById(rowId);
+        if (!row) return;
+        const cell = row.cells[period.col];
+        if (!cell) return;
+        const card = cell.querySelector(".class-card");
+        if (!card) return;
+
+        lastAlertKey = key;
+        const classTitle = card.childNodes[0]?.textContent?.trim() || "Class started";
+        beepSoft();
+        showClassNotification("Class started: " + classTitle, "Time: " + period.start + " - " + period.end);
+      }
+
+      function spawnParticle(x, y) {
+        if (!particlesLayer) return;
+        const p = document.createElement("span");
+        p.className = "particle";
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+        p.style.setProperty("--dx", (Math.random() * 26 - 13).toFixed(1) + "px");
+        p.style.setProperty("--dy", (Math.random() * 26 - 13).toFixed(1) + "px");
+        p.style.width = (4 + Math.random() * 5).toFixed(1) + "px";
+        p.style.height = p.style.width;
+        particlesLayer.appendChild(p);
+        setTimeout(() => p.remove(), 720);
+      }
+
+      function setupParticles() {
+        if (particleListenerBound) return;
+        particleListenerBound = true;
+        let last = 0;
+        window.addEventListener("pointermove", (e) => {
+          if (!particlesEnabled) return;
+          const now = performance.now();
+          if (now - last < 18) return;
+          last = now;
+          spawnParticle(e.clientX, e.clientY);
+          if (Math.random() > 0.55) spawnParticle(e.clientX + 7, e.clientY + 5);
+        });
+      }
+
+      function setupSpotlight() {
+        if (!spotlight) return;
+        window.addEventListener("pointermove", (e) => {
+          spotlight.style.left = e.clientX + "px";
+          spotlight.style.top = e.clientY + "px";
+        });
+      }
+
+      function setupFxToggles() {
+        particlesToggle.checked = particlesEnabled;
+        soundToggle.checked = audioEnabled;
+        notificationToggle.checked = notifyEnabled;
+        document.body.classList.toggle("fx-disabled", !particlesEnabled);
+
+        particlesToggle.addEventListener("change", function () {
+          particlesEnabled = this.checked;
+          localStorage.setItem("routine-particles", particlesEnabled ? "on" : "off");
+          document.body.classList.toggle("fx-disabled", !particlesEnabled);
+          if (!particlesEnabled && particlesLayer) particlesLayer.innerHTML = "";
+        });
+
+        soundToggle.addEventListener("change", function () {
+          audioEnabled = this.checked;
+          localStorage.setItem("routine-audio", audioEnabled ? "on" : "off");
+        });
+
+        notificationToggle.addEventListener("change", function () {
+          notifyEnabled = this.checked;
+          localStorage.setItem("routine-notify", notifyEnabled ? "on" : "off");
+          if (notifyEnabled && "Notification" in window && Notification.permission === "default") {
+            Notification.requestPermission();
+          }
+          syncPresetWithCurrentSettings();
+        });
+
+        particlesToggle.addEventListener("change", syncPresetWithCurrentSettings);
+        soundToggle.addEventListener("change", syncPresetWithCurrentSettings);
+      }
+
+      function applyPreset(presetName) {
+        if (presetName === "minimal") {
+          particlesEnabled = false;
+          audioEnabled = false;
+          notifyEnabled = false;
+        } else if (presetName === "balanced") {
+          particlesEnabled = true;
+          audioEnabled = false;
+          notifyEnabled = true;
+        } else {
+          particlesEnabled = true;
+          audioEnabled = true;
+          notifyEnabled = true;
+        }
+
+        particlesToggle.checked = particlesEnabled;
+        soundToggle.checked = audioEnabled;
+        notificationToggle.checked = notifyEnabled;
+        document.body.classList.toggle("fx-disabled", !particlesEnabled);
+        if (!particlesEnabled && particlesLayer) particlesLayer.innerHTML = "";
+
+        localStorage.setItem("routine-particles", particlesEnabled ? "on" : "off");
+        localStorage.setItem("routine-audio", audioEnabled ? "on" : "off");
+        localStorage.setItem("routine-notify", notifyEnabled ? "on" : "off");
+        localStorage.setItem("routine-fx-preset", presetName);
+
+        if (notifyEnabled && "Notification" in window && Notification.permission === "default") {
+          Notification.requestPermission();
+        }
+      }
+
+      function detectPresetFromSettings() {
+        if (!particlesEnabled && !audioEnabled && !notifyEnabled) return "minimal";
+        if (particlesEnabled && !audioEnabled && notifyEnabled) return "balanced";
+        if (particlesEnabled && audioEnabled && notifyEnabled) return "cinematic";
+        return "balanced";
+      }
+
+      function syncPresetWithCurrentSettings() {
+        const inferred = detectPresetFromSettings();
+        fxPreset.value = inferred;
+        localStorage.setItem("routine-fx-preset", inferred);
+      }
+
+      function setupFxPreset() {
+        const saved = localStorage.getItem("routine-fx-preset");
+        const initial = saved || detectPresetFromSettings();
+        fxPreset.value = initial;
+        applyPreset(initial);
+
+        fxPreset.addEventListener("change", function () {
+          applyPreset(this.value);
+        });
+      }
+
+      function setupCustomization() {
+        const themeSwitch = document.getElementById("theme-switch");
+        const accentPicker = document.getElementById("accent-picker");
+        const themeBadge = document.getElementById("theme-badge");
+        const root = document.documentElement;
+
+        const savedTheme = localStorage.getItem("routine-theme") || "auto";
+        const savedAccent = localStorage.getItem("routine-accent") || "#60a5fa";
+
+        function getLocalAutoTheme() {
+          // Local sunrise/sunset style window: daytime = light, nighttime = dark
+          const hour = new Date().getHours();
+          return hour >= 6 && hour < 18 ? "light" : "dark";
+        }
+
+        function applyThemeMode(mode) {
+          const resolved = mode === "auto" ? getLocalAutoTheme() : mode;
+          root.setAttribute("data-theme", resolved);
+          const resolvedTitle = resolved === "light" ? "Light" : "Dark";
+          if (mode === "auto") {
+            themeSwitch.title = "Auto uses your local time (06:00-17:59 Light, otherwise Dark)";
+            themeBadge.textContent = "Auto: " + resolvedTitle;
+            themeBadge.style.visibility = "visible";
+          } else {
+            themeSwitch.title = "";
+            themeBadge.textContent = "Manual: " + (mode === "light" ? "Light" : "Dark");
+            themeBadge.style.visibility = "visible";
+          }
+        }
+
+        applyThemeMode(savedTheme);
+        root.style.setProperty("--accent", savedAccent);
+        themeSwitch.value = savedTheme;
+        accentPicker.value = savedAccent;
+
+        themeSwitch.addEventListener("change", function () {
+          applyThemeMode(this.value);
+          localStorage.setItem("routine-theme", this.value);
+        });
+
+        accentPicker.addEventListener("input", function () {
+          root.style.setProperty("--accent", this.value);
+          localStorage.setItem("routine-accent", this.value);
+        });
+
+        // Keep auto mode synced with local time changes.
+        setInterval(() => {
+          const selectedMode = localStorage.getItem("routine-theme") || themeSwitch.value || "auto";
+          if (selectedMode === "auto") applyThemeMode("auto");
+        }, 60000);
+      }
+
+      updateClock();
+      highlightToday();
+      highlightCurrentClass();
+      updateLivePanel();
+      updateInsights();
+      setupCustomization();
+      setupFilters();
+      setupQuickActions();
+      setupRowEntrance();
+      setupCompactMode();
+      setupCollapsibleControls();
+      setupKeyboardShortcuts();
+      setupParticles();
+      setupSpotlight();
+      setupFxToggles();
+      setupFxPreset();
+      announceNewClass();
+      setInterval(updateClock, 1000);
+      setInterval(highlightToday, 60000);
+      setInterval(highlightCurrentClass, 30000);
+      setInterval(updateLivePanel, 1000);
+      setInterval(updateInsights, 60000);
+      setInterval(announceNewClass, 15000);
     </script>
   </body>
 </html>
